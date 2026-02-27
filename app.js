@@ -1,2 +1,2 @@
-const password = ProcessingInstruction.env.PASSWORD;
+const password = process.env.PASSWORD;
 console.log("App started");
