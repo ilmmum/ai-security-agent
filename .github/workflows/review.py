@@ -12,7 +12,11 @@ response = client.chat.completions.create(
     messages=[
         {
             "role": "system",
+<<<<<<< HEAD
             "content": "You are a security reviewer. Respond ONLY with PASS or FAIL. If the code is secure, say PASS. If not secure, say FAIL."
+=======
+            "content": "You are a security reviewer. Respond ONLY with PASS or FAIL. If secure, respond PASS. If insecure, respond FAIL."
+>>>>>>> c01a2bdfb3ba369f9a9a98500154d8239ff3ee11
         },
         {
             "role": "user",
