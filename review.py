@@ -9,11 +9,21 @@ with open("app.js", "r") as file:
 response = client.responses.create(
     model="gpt-4o-mini",
     input=f"""
-You are a security reviewer.
-Reply ONLY with SAFE or UNSAFE.
+You are a strict security reviewer.
 
-Is this code secure?
+If the code contains a hardcoded password like:
+const password = "123456";
 
+Respond ONLY with:
+UNSAFE
+
+If the password is read from environment variable like:
+process.env.PASSWORD
+
+Respond ONLY with:
+SAFE
+
+Here is the code:
 {code}
 """
 )
@@ -22,9 +32,12 @@ result = response.output_text.strip()
 
 print("AI RESULT:", result)
 
-if "UNSAFE" in result:
+if result == "UNSAFE":
     print("❌ Security issue found.")
     exit(1)
-else:
+elif result == "SAFE":
     print("✅ Code is safe.")
     exit(0)
+else:
+    print("Unexpected response. Failing for safety.")
+    exit(1)
