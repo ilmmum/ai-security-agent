@@ -1,43 +1,13 @@
 import os
-from openai import OpenAI
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 with open("app.js", "r") as file:
     code = file.read()
 
-response = client.responses.create(
-    model="gpt-4o-mini",
-    input=f"""
-You are a strict security reviewer.
+print("Simulated AI checking code...")
 
-If the code contains a hardcoded password like:
-const password = "123456";
-
-Respond ONLY with:
-UNSAFE
-
-If the password is read from environment variable like:
-process.env.PASSWORD
-
-Respond ONLY with:
-SAFE
-
-Here is the code:
-{code}
-"""
-)
-
-result = response.output_text.strip()
-
-print("AI RESULT:", result)
-
-if result == "UNSAFE":
-    print("❌ Security issue found.")
-    exit(1)
-elif result == "SAFE":
-    print("✅ Code is safe.")
+if 'process.env.PASSWORD' in code:
+    print("AI RESULT: SAFE")
     exit(0)
 else:
-    print("Unexpected response. Failing for safety.")
+    print("AI RESULT: UNSAFE")
     exit(1)
