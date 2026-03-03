@@ -1,2 +1,2 @@
-const password = "123456";
+const password = process.env.PASSWORD;
 console.log("App started");
